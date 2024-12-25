@@ -1,0 +1,60 @@
+{% set name = "markitdown" %}
+{% set version = "0.0.1a3" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/markitdown-{{ version }}.tar.gz
+  sha256: f6c8f5f7f5541e91c6c535218318968fefd71e2a6faa0eb782b3492e04cd023d
+
+build:
+  entry_points:
+    - markitdown = markitdown.__main__:main
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.10
+    - hatchling
+    - pip
+  run:
+    - python >=3.10
+    - beautifulsoup4
+    - requests
+    - mammoth
+    - markdownify
+    - numpy
+    - python-pptx
+    - pandas
+    - openpyxl
+    - pdfminer.six
+    - puremagic
+    - pydub
+    - youtube-transcript-api
+    - speechrecognition
+    - pathvalidate
+    - charset-normalizer
+    - openai
+    - pdfminer-six
+
+test:
+  imports:
+    - markitdown
+  commands:
+    - pip check
+    - markitdown --help
+  requires:
+    - pip
+
+about:
+  dev_url: https://github.com/microsoft/markitdown
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - roaldarbol
