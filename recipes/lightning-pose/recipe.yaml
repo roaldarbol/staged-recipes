@@ -1,0 +1,75 @@
+context:
+  version: 2.0.5
+
+package:
+  name: lightning-pose
+  version: ${{ version }}
+
+source:
+- url: https://pypi.org/packages/source/l/lightning-pose/lightning_pose-${{ version }}.tar.gz
+  sha256: 6f0fb338b8cba213849b7596757fde5acef0da6ec054a76157b68e0bba912cf2
+
+build:
+  script: ${{ PYTHON }} -m pip install .
+  python:
+    entry_points:
+    - litpose = lightning_pose.cli.main:main
+  noarch: python
+
+requirements:
+  host:
+  - python >=3.10
+  - poetry-core>=2.0.0
+  - pip
+  run:
+  - python >=3.10
+  - aniposelib
+  - h5py
+  - hydra-core
+  - imaug
+  - kornia
+  - lightning <2.6.0,>=2.5.0
+  - pytorch-lightning <2.6.0,>=2.5.0
+  - matplotlib
+  - moviepy >=2.0.0
+  - numpy >=2.0.0
+  - opencv
+  - pandas >=2.0.0
+  - pillow
+  - safetensors
+  - scikit-learn >=1.5.0
+  - tensorboard <3.0.0
+  - torchtyping
+  - torch <3.0.0
+  - torchvision <0.25.0
+  - transformers ==4.52.4
+  - typeguard
+  - nvidia-dali-python
+  # - autopep8  # extra == "dev"
+  # - flake8  # extra == "dev"
+  # - isort  # extra == "dev"
+  # - pytest  # extra == "dev"
+  # - pytest-html  # extra == "dev"
+  # - pytest-mock  # extra == "dev"
+  # - sphinx  # extra == "dev"
+  # - sphinx-argparse  # extra == "dev"
+  # - sphinx-automodapi  # extra == "dev"
+  # - sphinx-copybutton  # extra == "dev"
+  # - sphinx-design  # extra == "dev"
+  # - sphinx-rtd-dark-mode  # extra == "dev"
+  # - sphinx_rtd_theme  # extra == "dev"
+  # - tbparse <1.0.0 # extra == "dev"
+  # - lightning-bolts  # extra == "extra-models"
+
+tests:
+- python:
+    imports:
+    - lightning_pose
+    pip_check: true
+
+about:
+  homepage: https://github.com/paninski-lab/lightning-pose
+  summary: Semi-supervised pose estimation using pytorch lightning
+  description: |
+    "Pose estimation models implemented in **Pytorch Lightning**, supporting massively accelerated training on _unlabeled_ videos using **NVIDIA DALI**. \nModels can be evaluated with **TensorBoard**, **FiftyOne**, and **Streamlit**.\n\nAs of June 2024, Lightning Pose is now [published in Nature Methods](https://rdcu.be/dLP3z)!\n\n## Try our demo\n\n[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/paninski-lab/lightning-pose/blob/main/scripts/litpose_training_demo.ipynb)\n\nTrain a network on an example dataset and visualize the results in Google Colab.\n\n## Getting Started\nPlease see the [Lightning Pose documentation](https://lightning-pose.readthedocs.io/) \nfor installation instructions and user guides.\nNote that the Lightning Pose package provides tools for training and evaluating models on \n_already labeled data_ and unlabeled video clips. \n\nWe also offer a [browser-based application](https://github.com/Lightning-Universe/Pose-app) that \nsupports the full life cycle of a pose estimation project, from data annotation to model training \nto diagnostic visualizations.\n\nThe Lightning Pose team also actively develops the \n[Ensemble Kalman Smoother (EKS)](https://github.com/paninski-lab/eks), \na simple and performant post-processor that works with any pose estimation package including \nLightning Pose, DeepLabCut, and SLEAP.\n\n## Community\n\nLightning Pose is primarily maintained by \n[Karan Sikka](https://github.com/ksikka) (Columbia University),\n[Matt Whiteway](https://themattinthehatt.github.io) (Columbia University),\nand\n[Dan Biderman](https://dan-biderman.netlify.app) (Stanford University). \n \n\nLightning Pose is under active development and we welcome community contributions.\nWhether you want to implement some of your own ideas or help out with our [development roadmap](docs/roadmap.md), please get in touch with us on Discord (see contributing guidelines [here](CONTRIBUTING.md)). \n"
+  documentation: https://lightning-pose.readthedocs.io/
