@@ -1,0 +1,64 @@
+context:
+  version: "0.1.0"
+  python_min: "3.12"
+
+package:
+  name: pyevm
+  version: ${{ version }}
+
+source:
+  # The PyPI distribution is named "pyeulervid"; the import package is "pyevm".
+  url: https://pypi.org/packages/source/p/pyeulervid/pyeulervid-${{ version }}.tar.gz
+  sha256: ec283db08c690cb744a297354b53e8b707c32c3f43faef08c39e916ca3787ad1
+
+build:
+  noarch: python
+  script: python -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python ${{ python_min }}
+    - pip
+    - hatchling
+    - hatch-vcs
+  run:
+    - python >=${{ python_min }}
+    - pytorch >=2.2.2
+    - numpy >=1.26.0
+    - opencv >=4.13.0.92
+    - pillow >=10.0.0
+    - scipy >=1.12.0
+    - streamlit >=1.32.0
+    - tqdm >=4.0.0
+    - typer >=0.12.0
+    - loguru >=0.7.0
+
+tests:
+  - python:
+      imports:
+        - pyevm
+      pip_check: true
+      python_version: ${{ python_min }}
+  - script:
+      - pyevm --help
+
+about:
+  homepage: https://github.com/roaldarbol/pyevm
+  summary: "Eulerian Video Magnification: color, motion, and phase-based algorithms"
+  description: |
+    Eulerian Video Magnification (EVM) is a computational technique that
+    amplifies subtle, otherwise invisible variations in video — such as the
+    colour flush of a heartbeat, the micro-vibrations of a bridge, or the
+    barely perceptible breathing of a sleeping animal. pyevm provides clean,
+    GPU-accelerated Python implementations of the three canonical EVM
+    algorithms (color, motion, and phase), plus a CLI and an interactive
+    Streamlit app.
+  license: MIT
+  license_file: LICENSE
+  documentation: https://roaldarbol.github.io/pyevm
+  repository: https://github.com/roaldarbol/pyevm
+
+extra:
+  recipe-maintainers:
+    - roaldarbol
